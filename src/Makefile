@@ -12,11 +12,22 @@ SOURCES = $(shell echo ./*.cpp)
 HEADERS = $(shell echo ../include/*.hpp)
 OBJECTS = $(SOURCES:.cpp=.o)
 
-all:$(TARGET)
+EXEDIR = ../bin
+TESTSOURCES = $(shell echo ../test/*.cpp)
+TESTOBJECTS = ../src/testkdTree.o
+TESTTARGET = $(EXEDIR)/testkdTree
+
+all:$(TESTTARGET)
 
 clean:
-	rm -f $(OBJECTS) $(TARGET)
+	rm -f $(OBJECTS) $(TARGET) $(TESTOBJECTS) $(TESTTARGET)
 
+$(TESTTARGET): $(TESTOBJECTS) $(TARGET)
+	$(CC) -L$(TARGET) -o $@ $(TESTOBJECTS)
+
+$(TESTOBJECTS) : $(TESTSOURCES)
+	$(CC) $(FLAGS) -I$(INCLUDEDIR) $(TESTSOURCES)
+	
 $(TARGET) : $(OBJECTS) 
 	$(CC) $(LDFLAG) -Wl,-soname,$(TARGET) -o $(TARGET) $(OBJECTS)
 	
