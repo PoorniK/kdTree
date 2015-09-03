@@ -1,7 +1,7 @@
 .PHONY : clean
 
 CC = g++
-FLAGS = -std=c++11 -fPIC -g -c -Wall
+FLAGS = -std=c++11 -fPIC -g -c #-Wall
 LDFLAG = -shared
 SHELL = /bin/sh
 
