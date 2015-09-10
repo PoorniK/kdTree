@@ -19,11 +19,10 @@ public:
 	kdTree(vector<vector<double>> points, const string& split = "median",
 		 int cutdimension=0);
 	~kdTree();
-	
+	kdTree(const string & filename);
 	void insert(const vector<double>& point);
-	void search(const vector<double>& point, int &k);
+	vector<vector<double>> search(const vector<double>& point, int &k);
 	void saveTree(const string & filename);
-	void loadTree(const string & filename);
 
 };
 

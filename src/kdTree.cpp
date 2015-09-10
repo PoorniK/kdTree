@@ -113,22 +113,40 @@ void kdTree::insert(const vector<double>& v){
 
 //Search K-nearest neighbor of a give point
 
-void kdTree::search(const vector<double>& v, int& k){
-	priority_queue<vector<double>,vector<vector<double>>,distFinder> kNN(kdTreeRoot->getValue);
+vector<vector<double>> kdTree::search(const vector<double>& v, int& k){
+	priority_queue<vector<double>,vector<vector<double>>,distFinder> kNN(kdTreeRoot->getValue());
 	
 	if (!kdTreeRoot){
-		return;
+		return vector<vector<double>>(); ;
 		}
 	else{
 		 kdTreeRoot->search(v,k,kNN);
 	}
+	
+	vector<vector<double>> nearestPts(kNN.size());
+	copy(&(kNN.top()), &(kNN.top()) + kNN.size(), &nearestPts[0]);
+	return nearestPts;
 }
 
-//Save KdTree to a file
+//Save kdTree to a file
 void kdTree::saveTree(const string & filename)
 {
 	ofstream out(filename);
+	out << splitMethod << endl;
 	kdTreeRoot->writeTree(out);
+}
+
+//Load kdTree from file
+kdTree::kdTree(const string & filename)
+{
+	ifstream in(filename);
+	getline(in, splitMethod);
+	
+	string firstline;
+	getline(in, firstline);
+  	
+	kdTreeRoot = shared_ptr<kdTreeNode> (new kdTreeNode(firstline,in,0));
+	dimension = kdTreeRoot->getValue().size();
 }
 
 kdTree::~kdTree()

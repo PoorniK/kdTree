@@ -1,6 +1,5 @@
 #include "kdTreeNode.hpp"
-#include "distFinder.hpp"
-
+#include <iostream>
 kdTreeNode::kdTreeNode(vector<double> inValue, int axis, 
 	shared_ptr<kdTreeNode> rightChild, shared_ptr<kdTreeNode> leftChild): 
 	value(inValue),
@@ -41,33 +40,45 @@ void kdTreeNode::writeTree(ofstream & out)
 {
   if (!this) 
   {
-    out << "# ";
+    out << "# "<< endl;
   } 
   else 
   {
-    ostream_iterator<double> output_iterator(out, ",");
+    ostream_iterator<double> output_iterator(out, " ");
     copy(value.begin(), value.end(), output_iterator);
-    out << '\n';
+    out << endl;
     left->writeTree(out);
     right->writeTree(out);
   }
 }
 
-kdTreeNode kdTreeNode::readTree(ifstream &fin) {
-  int token(0);
-  bool isPoint(0);
-  //if (!readNextToken(token, fin, isPoint)) 
-  //  return;
-  if (isPoint) 
-  {
-    //value = token;
-    left->readTree(fin);
-    right->readTree(fin);
+// Read tree: Constructor is overriden to create new kdTree from the file
+kdTreeNode::kdTreeNode(string firstline, ifstream &fin, int axis) {
+
+  nodeaxis = axis;
+  string rightline,leftline;
+  left = nullptr;
+  right = nullptr;
+        
+  stringstream split(firstline);
+  	double datapoint;
+  	while (split >> datapoint){
+  		value.push_back(datapoint);
+  }
+  	      
+  getline(fin, leftline);
+	
+  if ((size_t)leftline.find("#") == string::npos){
+  		left = shared_ptr<kdTreeNode> (new kdTreeNode(leftline,fin,axis+1)); 
   }
   
-  return *this;
+  getline(fin, rightline);
+  if ((size_t)rightline.find("#") == string::npos){
+  		right = shared_ptr<kdTreeNode> (new kdTreeNode(rightline,fin,axis+1)); 
+  }
 }
 
+// Search for k nearest neighbors in the tree
 void kdTreeNode::search(const vector<double>& v1,int& k, 
 	priority_queue<vector<double>,vector<vector<double>>,distFinder>& p){
 	p.push(value);

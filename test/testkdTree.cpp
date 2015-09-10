@@ -41,4 +41,14 @@
 	k2->saveTree("k2tree.txt");
 	k3->saveTree("k3tree.txt");
 	k4->saveTree("k4tree.txt");
+	
+	// test load tree
+	string filename("k4tree.txt");
+	shared_ptr<kdTree> k5 = shared_ptr<kdTree>(new kdTree(filename));
+	k5->saveTree("k5tree.txt");
+	//diff between k4tree and k5tree is empty hence validating the load from file
+	
+	// test nearest neighbor search
+	int k = 2;
+	vector<vector<double>> nPoints = k1->search(v2,k);
 }

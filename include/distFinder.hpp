@@ -8,7 +8,7 @@
 
 using namespace std;
 
-double euclideanDist(const vector<double>& v1, const vector<double>& v2)
+inline double euclideanDist(const vector<double>& v1, const vector<double>& v2)
 {
     if (v1.size() != v2.size())
         throw domain_error("Vectors must be of equal length");

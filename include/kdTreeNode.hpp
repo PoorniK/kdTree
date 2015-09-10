@@ -6,6 +6,7 @@
 #include <fstream>
 #include <queue>
 #include <iterator>
+#include <sstream>
 #include "distFinder.hpp"
 
 using namespace std;
@@ -28,7 +29,7 @@ public:
 	void search(const vector<double>& v, int & k, priority_queue<vector<double>,vector<vector<double>>,distFinder>& p);
 	void writeTree(ofstream & out);
 	vector<double> getValue();
-	kdTreeNode readTree(ifstream & in);
+	kdTreeNode(string firstline, ifstream & in,int axis);
 	~kdTreeNode();
 };
 
