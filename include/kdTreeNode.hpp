@@ -3,6 +3,10 @@
 
 #include <memory>
 #include <vector>
+#include <fstream>
+#include <queue>
+#include <iterator>
+#include "distFinder.hpp"
 
 using namespace std;
 class kdTree;
@@ -20,8 +24,13 @@ public:
 	kdTreeNode(vector<double> value, int nodeaxis = 0, 
 		shared_ptr<kdTreeNode> = nullptr, shared_ptr<kdTreeNode> = nullptr);
 	
-	void insert(const vector<double>& p);
+	void insert(const vector<double>& v);
+	void search(const vector<double>& v, int & k, priority_queue<vector<double>,vector<vector<double>>,distFinder>& p);
+	void writeTree(ofstream & out);
+	vector<double> getValue();
+	kdTreeNode readTree(ifstream & in);
 	~kdTreeNode();
 };
+
 
 #endif
