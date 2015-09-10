@@ -9,15 +9,15 @@ This repository contains a simple implementation of kdTree with the following co
 
 #Build instructions
 
-*Use g++ to build a shared static library from the src repository
-*The Makefile is included in the src folder
+* Use g++ to build a shared static library from the src repository
+* The Makefile is included in the src folder
 
 $ cd <root>/src
 $ make
 
-*Make also builds an executable from the test file located in the test folder. 
-*The executable and the library and generated in the bin and the lib folders respectively. 
-*The test file contains unit tests. To run the test:
+* Make also builds an executable from the test file located in the test folder. 
+* The executable and the library and generated in the bin and the lib folders respectively. 
+* The test file contains unit tests. To run the test:
 
 $ cd <root>/bin
 $ ./testkdTree
